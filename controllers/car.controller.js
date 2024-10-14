@@ -14,7 +14,7 @@ carController.createCar = async (req, res, next) => {
     if (!info) throw new AppError(402, "Bad Request", "Create Car Error");
     //mongoose query
     const created = await Car.create(info);
-    sendResponse(res, 200, true, { data: created }, null, "Create Foo Success");
+    sendResponse(res, 200, true, { data: created }, null, "Create Car Success");
   } catch (err) {
     // YOUR CODE HERE
     next(err);
