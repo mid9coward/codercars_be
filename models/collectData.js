@@ -7,7 +7,7 @@ const localMongoURI = process.env.MONGO_URI;
 // const atlasMongoURI = process.env.ATLASMONGO_URI;
 
 mongoose.set("strictQuery", true); // Sửa đổi cảnh báo strictQuery
-const csvFilePath = "./data.csv";
+const csvFilePath = "../data.csv";
 
 const collectCars = async () => {
   try {
