@@ -7,7 +7,7 @@ const localMongoURI = process.env.MONGO_URI;
 // const atlasMongoURI = process.env.ATLASMONGO_URI;
 
 mongoose.set("strictQuery", true); // Sửa đổi cảnh báo strictQuery
-const csvFilePath = "../data.csv";
+const csvFilePath = "./data.csv";
 
 const collectCars = async () => {
   try {
@@ -18,11 +18,11 @@ const collectCars = async () => {
       return {
         make: carData.Make,
         model: carData.Model,
-        release_date: parseInt(carData.Year),
-        transmission_type: carData["Transmission Type"].toUpperCase(),
-        size: carData["Vehicle Size"],
         style: carData["Vehicle Style"],
+        size: carData["Vehicle Size"],
+        transmission_type: carData["Transmission Type"].toUpperCase(),
         price: parseInt(carData.MSRP),
+        release_date: parseInt(carData.Year),
         isDeleted: false,
       };
     });
