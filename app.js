@@ -19,18 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-  })
-  .then(() => {
-    console.log("Connected to MongoDB successfully!");
-  })
-  .catch((err) => {
-    console.error("Failed to connect to MongoDB:", err);
-  });
+mongoose.connect(process.env.MONGO_URI, () => {
+  console.log("Connected to Database!");
+});
 
 mongoose
   .connect(mongoURI)

@@ -21,25 +21,21 @@ carController.createCar = async (req, res, next) => {
 carController.getCars = async (req, res, next) => {
   try {
     const LIMIT = 10;
-    const { page } = req.query;
+    const { page = 1 } = req.query; // Default to page 1 if not provided
 
-    const numberOfCars = await Car.aggregate([{ $count: "numberOfCars" }]);
+    const numberOfCars = await Car.countDocuments(); // Use countDocuments instead of aggregation
 
-    // Handle empty results
-    const totalPages =
-      numberOfCars.length > 0
-        ? Math.ceil(numberOfCars[0].numberOfCars / LIMIT)
-        : 0;
+    const totalPages = Math.ceil(numberOfCars / LIMIT);
 
     const listOfCars = await Car.find({})
-      .skip(page > 0 ? (page - 1) * LIMIT : 0)
+      .skip((page - 1) * LIMIT)
       .limit(LIMIT);
 
     res.status(200).send({
       message: "Get car list successfully!",
       data: {
         cars: listOfCars,
-        page: page,
+        page: parseInt(page, 10),
         total: totalPages,
       },
     });
