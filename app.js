@@ -19,24 +19,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// Function to establish the MongoDB connection
-const connectToDatabase = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-      bufferCommands: false, // Disable buffering during initial connection
-    });
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+  })
+  .then(() => {
     console.log("Connected to MongoDB successfully!");
-  } catch (err) {
+  })
+  .catch((err) => {
     console.error("Failed to connect to MongoDB:", err);
-    process.exit(1); // Exit the application if the connection fails
-  }
-};
-
-// Call the function to connect to MongoDB
-connectToDatabase();
+  });
 
 mongoose
   .connect(mongoURI)
