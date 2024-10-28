@@ -2,16 +2,6 @@ const mongoose = require("mongoose");
 const Car = require("../models/Car");
 const carController = {};
 
-mongoose.connect(
-  "mongodb+srv://codercars:0904586746aA@cars.halg9.mongodb.net/",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-    bufferCommands: false, // Disable buffering during initial connection
-  }
-);
-
 carController.createCar = async (req, res, next) => {
   try {
     const info = req.body;
