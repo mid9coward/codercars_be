@@ -22,15 +22,19 @@ carController.getCars = async (req, res, next) => {
   try {
     const LIMIT = 10;
     const { page } = req.query;
-    const numberOfCars = await Car.aggregate([
-      {
-        $count: "numberOfCars",
-      },
-    ]);
-    const totalPages = Math.ceil(numberOfCars[0].numberOfCars / LIMIT);
+
+    const numberOfCars = await Car.aggregate([{ $count: "numberOfCars" }]);
+
+    // Handle empty results
+    const totalPages =
+      numberOfCars.length > 0
+        ? Math.ceil(numberOfCars[0].numberOfCars / LIMIT)
+        : 0;
+
     const listOfCars = await Car.find({})
       .skip(page > 0 ? (page - 1) * LIMIT : 0)
       .limit(LIMIT);
+
     res.status(200).send({
       message: "Get car list successfully!",
       data: {
